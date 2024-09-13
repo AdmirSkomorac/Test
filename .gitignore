@@ -1,0 +1,39 @@
+# Magento generated files
+/app/etc/config.php
+/app/etc/env.php
+
+# Ignore Composer dependencies
+/vendor/
+/composer.lock
+
+# Ignore session, cache, and log files
+/generated/
+/var/
+/pub/static/
+/pub/media/catalog/product/cache/
+/pub/media/wysiwyg/cache/
+/pub/media/tmp/
+
+# Ignore Node dependencies
+/node_modules/
+
+# Ignore PHPStorm project files
+.idea/
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore Magento sample data
+/dev/tools/
+/setup/
+
+# Ignore environment-specific files
+*.local.xml
+*.swp
+*.swo
+
+# Ignore specific directories if they exist
+# Add any custom paths or files here
+app/code/Scandiweb/Test/etc/env.php
+app/code/Scandiweb/Test/etc/config.php
