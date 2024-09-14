@@ -164,3 +164,4 @@ class AddSimpleProduct implements DataPatchInterface
         return [];
     }
 }
+
