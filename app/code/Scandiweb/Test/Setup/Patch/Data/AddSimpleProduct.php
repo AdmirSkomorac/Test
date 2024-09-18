@@ -8,6 +8,7 @@ use Magento\Catalog\Model\CategoryFactory;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Catalog\Model\Product\Type;
+use Magento\Catalog\Model\Product;
 use Magento\Eav\Setup\EavSetup;
 use Magento\InventoryApi\Api\Data\SourceItemInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
@@ -18,44 +19,36 @@ use Magento\InventoryApi\Api\SourceItemsSaveInterface;
 class AddSimpleProduct implements DataPatchInterface
 {
     /**
-     *
      * @var ProductInterfaceFactory
      */
     protected ProductInterfaceFactory $productInterfaceFactory;
 
     /**
-     *
      * @var ProductRepositoryInterface
      */
     protected ProductRepositoryInterface $productRepository;
 
     /**
-     *
      * @var CategoryFactory
      */
     protected CategoryFactory $categoryFactory;
 
     /**
-     *
      * @var State
      */
     protected State $state;
 
     /**
-     *
      * @var SourceItemInterfaceFactory
      */
     protected SourceItemInterfaceFactory $sourceItemFactory;
     
     /**
-     *
      * @var SourceItemsSaveInterface
      */
     protected SourceItemsSaveInterface $sourceItemsSaveInterface;
-
    
     /**
-     *
      * @var EavSetup
      */
     protected EavSetup $eavSetup;
