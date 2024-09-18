@@ -19,6 +19,42 @@ use Magento\InventoryApi\Api\SourceItemsSaveInterface;
 class AddSimpleProduct implements DataPatchInterface
 {
     /**
+     * @var string
+     */
+    private const SKU = 'simple-product';
+
+    /**
+     * @var string
+     */
+    private const PRODUCT_NAME = 'Simple Product';
+
+     /**
+     * @var float
+     */
+    private const PRICE = 50.00;
+
+    /**
+     * @var int
+     */
+    private const CATEGORY_ID = 2;
+
+    /**
+     * Default stock quantity for the product.
+     * 
+     * @var int
+     */
+    private const QTY = 100;
+
+    /**
+     * Quantity for the product in the inventory source.
+     * 
+     * This quantity represents how much stock will be available in the default inventory source.
+     * 
+     * @var int
+     */
+    private const SOURCE_QTY = 100;
+
+    /**
      * @var ProductInterfaceFactory
      */
     protected ProductInterfaceFactory $productInterfaceFactory;
@@ -104,7 +140,7 @@ class AddSimpleProduct implements DataPatchInterface
      */
     public function execute(): void
     {
-        $sku = 'simple-product';
+        $sku = self::SKU;
 
         // Check if the product already exists by SKU
         if ($this->productRepository->getIdBySku($sku)) {
@@ -116,17 +152,17 @@ class AddSimpleProduct implements DataPatchInterface
         // Use EavSetup to get the attribute set ID dynamically
         $attributeSetId = $this->eavSetup->getAttributeSetId(Product::ENTITY, 'Default');
         
-        $product->setSku($sku);
-        $product->setName('Simple Product');
-        $product->setPrice(50);
+        $product->setSku(self::SKU);
+        $product->setName(self::PRODUCT_NAME);
+        $product->setPrice(self::PRICE);
         $product->setAttributeSetId($attributeSetId); // Default attribute set for products
-        $product->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED); // Enable product
-        $product->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH); // Catalog and Search
-        $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE);
-        $product->setStockData(['qty' => 100, 'is_in_stock' => 1]);
+        $product->setStatus(Status::STATUS_ENABLED); // Enable product
+        $product->setVisibility(Visibility::VISIBILITY_BOTH); // Catalog and Search
+        $product->setTypeId(Type::TYPE_SIMPLE);
+        $product->setStockData(['qty' => self::QTY, 'is_in_stock' => 1]);
 
         // Assign the product to the "Default Category" (ID 2)
-        $categoryId = 2;
+        $categoryId = self::CATEGORY_ID;
         $category = $this->categoryFactory->create()->load($categoryId);
         $product->setCategoryIds([$category->getId()]);
 
@@ -136,7 +172,7 @@ class AddSimpleProduct implements DataPatchInterface
         // Create and configure source item for inventory
         $sourceItem = $this->sourceItemFactory->create();
         $sourceItem->setSourceCode('default'); // Set the default source code
-        $sourceItem->setQuantity(90); // Set the quantity
+        $sourceItem->setQuantity(self::SOURCE_QTY); // Set the quantity
         $sourceItem->setSku($product->getSku()); // Link the product SKU to the source item
         $sourceItem->setStatus(SourceItemInterface::STATUS_IN_STOCK); // Set stock status to "In Stock"
 
@@ -164,4 +200,3 @@ class AddSimpleProduct implements DataPatchInterface
         return [];
     }
 }
-
